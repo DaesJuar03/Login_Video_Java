@@ -17,9 +17,9 @@
 
             if (username != null && password != null) {
                 String jdbcDriver = "com.mysql.jdbc.Driver";
-                String dbUrl = "jdbc:mysql://localhost:3306/agencia_vuelo";
-                String dbUser = "root";
-                String dbPassword = "1213";
+                String dbUrl = "jdbc:mysql://localhost:UR_PORT/DB_NAME";
+                String dbUser = "user";
+                String dbPassword = "password";
 
                 Login login = new Login(jdbcDriver, dbUrl, dbUser, dbPassword);
                 boolean valid = login.validate(username, password);
@@ -38,15 +38,7 @@
 
         %>
 
-        <script>
-
-            Swal.fire({
-                title: 'Error!',
-                text: 'Do you want to continue',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-        </script>
+     
 
     </body>
 </html>

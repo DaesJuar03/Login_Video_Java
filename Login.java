@@ -1,92 +1,87 @@
-package JAVA;
+package Login_Register;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login {
+
     private final String jdbcDriver;
-    private final String DB_URL;
-    private final String DbUser;
-    private final String DbPassword;
+    private final String dbUrl;
+    private final String dbUser;
+    private final String dbPassword;
 
     public Login(String jdbcDriver, String dbUrl, String dbUser, String dbPassword) {
         this.jdbcDriver = jdbcDriver;
-        this.DB_URL = dbUrl;
-        this.DbUser = dbUser;
-        this.DbPassword = dbPassword;
+        this.dbUrl = dbUrl;
+        this.dbUser = dbUser;
+        this.dbPassword = dbPassword;
     }
 
-public boolean validar (String username, String password){
+    public boolean validate(String username, String password) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
+        try {
+            // Registra el JDBC driver
+            Class.forName(jdbcDriver);
 
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
+            // Abre la conexion
+            System.out.println("Connecting to the database...");
+            conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
 
-    try{
-        Class.forName(jdbcDriver);
-        
-
-        // Abre la conexion
-        conn = DriverManager.getConnection(password, username, password);
-
-        //Ejecuta el query
-        String sql = "SELECT username, password FROM db_name WHERE username = ? AND password = ?";
-        stmt = conn.prepareStatement(sql);
+            // Ejecuta el query
+            String sql = "SELECT username, password FROM user WHERE username = ? AND password = ?";
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
             rs = stmt.executeQuery();
 
-            //Valida si el usuario y contraseña son reales
-
-            if (rs.next()){
-                //Abre la conexion
+            // Valida si el usuario y contraseña es verdadero
+            if (rs.next()) {
+                // Cierra la conexion
                 rs.close();
                 stmt.close();
                 conn.close();
                 return true;
-
-            }else {
-                //Cierra la conexion
-                rs.close();
+            } else {
+                // Cierra la conexion
                 rs.close();
                 stmt.close();
                 conn.close();
                 return false;
             }
-    } catch (SQLException se){
-        se.printStackTrace();
-
-    } catch (Exception e){
-        e.printStackTrace();
-    } finally {
-        // Cierra la conexion por cualquier error
-        //Esto me lo saltare ya que es igual a la otra clase.
-        try {
-            if (rs != null) {
-                rs.close();
-            }
         } catch (SQLException se) {
             se.printStackTrace();
-        }
-        try {
-            if (stmt != null) {
-                stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Cierra la conexion por cualquier error
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
             }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        }
-        try {
-            if (conn != null) {
-                conn.close();
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
             }
-        } catch (SQLException se) {
-            se.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
-
+        return false;
     }
-
-    return false;
-
-}
-
 }

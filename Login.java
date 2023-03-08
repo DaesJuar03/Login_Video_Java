@@ -26,10 +26,10 @@ public class Login {
         ResultSet rs = null;
 
         try {
-            // Registra el JDBC driver
+          
             Class.forName(jdbcDriver);
 
-            // Abre la conexion
+            // Open and called the conection
             System.out.println("Connecting to the database...");
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
 
@@ -40,15 +40,15 @@ public class Login {
             stmt.setString(2, password);
             rs = stmt.executeQuery();
 
-            // Valida si el usuario y contraseña es verdadero
+            // Validate if user are real
             if (rs.next()) {
-                // Cierra la conexion
+                // Close the conection
                 rs.close();
                 stmt.close();
                 conn.close();
                 return true;
             } else {
-                // Cierra la conexion
+               // Close the conection
                 rs.close();
                 stmt.close();
                 conn.close();
@@ -59,7 +59,7 @@ public class Login {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // Cierra la conexion por cualquier error
+            // // Close the conection for any error or for security
             try {
                 if (rs != null) {
                     rs.close();

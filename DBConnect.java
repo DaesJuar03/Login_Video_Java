@@ -8,14 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /* 
-Esta clase conecta con la clase LOGIN, llama  a la base de datos.
+This class, is called from class Login, this comunicate from our DB.
  */
 public class DBConnect {
 
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/agencia_vuelo";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/DB_NAME";
     private static final String USER = "root";
-    private static final String PASS = "1213";
+    private static final String PASS = "1234";
 
     public static boolean validate(String username, String password) {
         boolean status = false;

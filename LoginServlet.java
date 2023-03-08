@@ -15,7 +15,7 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/agencia_vuelo";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/NAME_DB";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "1213";
 
@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 
         boolean isValid = login.validate(username, password);
         if (isValid) {
-            // Obtener el nombre de usuario correspondiente al correo electrónico
+            // Get the name from the user in our DB
           
             HttpSession session = request.getSession();
             response.sendRedirect("home.jsp");
